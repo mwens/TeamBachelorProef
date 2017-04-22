@@ -18,7 +18,6 @@ uart_int:	push	psw
 		mov	a,R0
 		push	acc
 		cpl	p2.5
-		jb	error,uart_error2
 		
 uart_rec:	jnb	RI, uart_trans2 	;Received?
 		mov	R0,SBUF			;lees ontvangen character;	
@@ -30,8 +29,6 @@ uart_rec:	jnb	RI, uart_trans2 	;Received?
 		ljmp	uart_trans
 
 uart_trans2:	ljmp	uart_trans
-
-uart_error2:	ljmp	uart_error
 		
 uart_lees:	mov	a,uart_in_counter
 		cjne	a,#0h,uart_lees1	;counter op 0 => in buf1
@@ -141,6 +138,7 @@ print_fase:	mov	SBUF,fase		;schrijf character;
 		sjmp	uart_ret
 		
 uart_trans:	jnb	TI, uart_ret			;End Transmission?
+		jb	error,uart_error
 
 uart_ret:	pop	acc
 		mov	R0,a
