@@ -1,6 +1,6 @@
 ;******************************************************************************
 ; Hier kan de gebruiker instellen welke versie van het aduc800 bord er gebruikt
-; wordt. V1.1 zal communiceren via een seriële poort, V2.2 via USB
+; wordt. V1.1 zal communiceren via een seriÃ«le poort, V2.2 via USB
 ; Dit is ook belangrijk voor het lezen van de schakelaars.  Deze zitten op 
 ; andere poortpinnen bij de twee versies! (zie hardware documentatie)
 ; Instelling versie ADuC832 bord = V1.1: verander in commentaar voor V2.0 (i2c)
@@ -134,7 +134,7 @@ endif                               ;dus doen we dit hier nog eens!
 ; Versie ADuC832v2.2:
 ; Hier is het LCD via een I2C port expander PCF8574 verbonden met de controller
 ; Via de definitie van het symbool aduc832_v1_1 of aduc832_v2_0 kan er 
-; conditioneel code worden geassembleerd voor één van de twee versies:
+; conditioneel code worden geassembleerd voor Ã©Ã©n van de twee versies:
 ; aduc832_v1_1    set 1 => ADuC832v1.1 (poort0) = default instelling
 ; aduc832_v2_0  set    1 => ADuC832v2.0 (IIC-bus) 
 ; 
@@ -1013,7 +1013,7 @@ ifdef aduc_i2c
 ; Toevoeging [dp]
 ; i2csenddata  :adresseert en stuurt de inhoud van een geheugenbuffer naar 
 ;               een slavedevice
-; i2crcvdata   :adresseert en ontvangt één of meerdere databytes van een slave
+; i2crcvdata   :adresseert en ontvangt Ã©Ã©n of meerdere databytes van een slave
 ;               en plaatst deze in een geheugenbuffer
 ;******************************************************************************
 i2cpcf8574		equ		01000000b		;port expander basisadres gewone versie
@@ -1051,7 +1051,7 @@ i2cstop:        clr     mdo             ;data moet laag worden
 
 ;******************************************************************************
 ; i2coutbyte    
-; Deze routine stuurt één databyte (MSbit eerst) naar een I2C slave device.
+; Deze routine stuurt Ã©Ã©n databyte (MSbit eerst) naar een I2C slave device.
 ; De routine vernietigt geen registers.
 ; input : De te versturen byte wordt doorgegeven in ACCU
 ; output: De carry zal de waarde van de ack bit bevatten na het
@@ -1124,7 +1124,7 @@ i2cinbyten1:    clr     mde             ;iic data pin als input schakelen
 
 ;******************************************************************************
 ; i2csenddata 
-; Adresseert en stuurt één of meerdere bytes over de I2C bus naar een 
+; Adresseert en stuurt Ã©Ã©n of meerdere bytes over de I2C bus naar een 
 ; slave device op de bus. Het 7 bit slave-adres, met de Write aanduiding "0" 
 ; op bitpositie 0 wordt doorgegeven via dph. Bij 10 bit adressering (indien het
 ; aan te spreken I2C device dit vereist) zal het 7 bit adres in dph '11110xx' 
@@ -1186,7 +1186,7 @@ i2csenderror:       lcall  i2cstop      ;stopconditie genereren
                     
 ;******************************************************************************
 ; i2crcvdata 
-; Adresseert en ontvangt één of meerdere bytes over de I2C bus van een 
+; Adresseert en ontvangt Ã©Ã©n of meerdere bytes over de I2C bus van een 
 ; slave device op de bus. Het 7 bit slave-adres, met de Read aanduiding "1" 
 ; op bitpositie 0 wordt doorgegeven via dph. Bij 10 bit adressering (indien het
 ; aan te spreken I2C device dit vereist) zal het 7 bit adres in dph '11110xx' 
@@ -1377,7 +1377,7 @@ endif    ;einde aduc_i2c
 
 
 
-ifdef    aduc_sio    ;driver voor de seriële poort (UART)           
+ifdef    aduc_sio    ;driver voor de seriÃ«le poort (UART)           
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
 ; ADuCsio.inc 
@@ -4078,7 +4078,7 @@ mul16_i_pi:     push    acc             ;registers bewaren
 ; input:     r1,r0 = acc0 (low word)
 ;                
 ; output:    r3,r2,r1,r0 = acc0 = acc0 x sqrt2
-;                                 0 tot  +74985  (000000h … 0124e9ch)           
+;                                 0 tot  +74985  (000000h Â… 0124e9ch)           
 ;                                      
 ; vernietigt:  niets
 ;*******************************************************************************
@@ -5536,7 +5536,7 @@ ifdef    aduc_key    ;matrix keyboard scanner en lezen/debouncen schakelaars
 ; gebruikt.
 ; Het blokschema van het gevolgde algorithme is hieronder aangegeven.
 ; Het bestaat uit een debounce circuit gevolgd door een flankdetector.
-; Het blokschema is hier afgebeeld voor één bit (kolomlijn) die gelezen wordt
+; Het blokschema is hier afgebeeld voor Ã©Ã©n bit (kolomlijn) die gelezen wordt
 ; en als ingang wordt aangeboden.
 ;
 ;                                  ___                 ___
