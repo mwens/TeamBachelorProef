@@ -160,6 +160,7 @@ bit6:		clr	clk
 
 clock:		mov	Din,c
 		inc	spi_counter
+		clr	c
 		mov	c,Dout
 		mov	a,r3
 		rlc	a
@@ -176,6 +177,7 @@ bit7:		clr	clk
 		MOV	c,22h.0
 		mov	Din,c
 		mov	spi_counter,#0h
+		clr	c
 		mov	c,Dout
 		mov	a,r3
 		rlc	a

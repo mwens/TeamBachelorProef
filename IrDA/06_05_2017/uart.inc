@@ -122,6 +122,7 @@ uart_error_tmp: ljmp	uart_error_msg
 ; <Start Transmit>		
 uart_trans:	jnb	TI, uart_ret			;SBUF fully transmitted?
 		jb	error,uart_trans_msg
+		jb	uart_in_data,uart_data
 		sjmp	uart_ret
 
 
@@ -146,9 +147,10 @@ einde:		clr	error
 		sjmp	uart_ret
 
 
-print_fase:	mov	a,fase
-		lcall	batrans			;cijfer omzetten in overeenkomstig ascii karakter
-		mov	r0,a
+print_fase:	;mov	a,fase
+		;lcall	batrans			;cijfer omzetten in overeenkomstig ascii karakter
+		;mov	r0,a
+		sjmp	uart_ret
 
 byte_trans:	mov	SBUF,r0			;schrijf karacter;	
 		sjmp	uart_ret		
@@ -166,8 +168,13 @@ uart_ret:	pop	acc
 
 ;terugsturen binnengekregen data
 
-uart_in:	setb	uart_in_data
-		inc	uart_out_counter
+uart_in:	push	acc
+		mov	a,r0
+		push	acc
+		push	psw
+		setb	uart_in_data
+
+uart_data:	inc	uart_out_counter
 		mov	a,uart_out_counter
 		dec	a
 		jz	in1
@@ -187,7 +194,12 @@ in1:		mov	a,r4
 		rl	a
 		lcall	batrans
 		mov	r0,a
-		mov	SBUF,r0			;schrijf karacter;	
+		mov	SBUF,r0			;schrijf karacter;
+			
+		pop	psw
+		pop	acc
+		mov	r0,a
+		pop	acc
 		ret
 		
 in2:		mov	a,r4
