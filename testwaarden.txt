@@ -1,0 +1,19 @@
+5 testen per afstand, loodrechte afstand
+
+
+10cm:	0/5 ontvangen	0/5 code's juist
+8cm: 	3/5				3/5
+6cm:	4/5				4/5
+
+45°,6cm:	Onbetrouwbaar maar mogelijk
+			Enkele richting, de assymetrie van de IR tranceiver
+			zorgt ervoor dat 1 richting nog kan ontvangen, terwijl
+			de ander dat niet doet
+
+90°,hoek PCB tegen hoek PCB
+			Ook onbetrouwbaar maar mogelijk
+			Enkele richting (zie hierboven).
+			Max afstand +-1cm om heel af en toe te kunnen ontvangen (<1/5 keer)
+			
+			
+			EERST BUFFER LEEGMAKEN NA ZENDEN VOORDAT WE GAAN ONTVANGEN!
