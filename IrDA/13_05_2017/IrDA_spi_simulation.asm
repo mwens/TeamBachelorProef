@@ -25,7 +25,7 @@ laatste_byte	bit	1			;wordt gezet wanneer 1e byte gezonden ontvangen => dan wete
 uart_flag	bit	2			; gezonden/ontvangen moet worden.
 uart_in_mode	bit	3			; ':' start commando => mode = 1 (CR eindigd,mode = 0)
 string		bit	4
-sending_msg	bit	4
+sending_msg	bit	5
 byte1		bit	6
 versturen	bit	7
 sampled		bit	8
