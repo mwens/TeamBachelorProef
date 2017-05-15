@@ -207,7 +207,7 @@ einde_spi:	clr	byte1
 		lcall	wait
 		setb	CS
 		lcall	wait
-		lcall	uart_in
+		;lcall	uart_in		;afdrukken van ontvangen IrDA signalen
 		ljmp	main
 
 

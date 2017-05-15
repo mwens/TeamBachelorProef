@@ -4,7 +4,9 @@ init_uart:	lcall 	initsio			;init baudrategenerator (t3) op 9600 baud (pllcon wo
 		mov	uart_in_counter,#0h	
 		clr	uart_flag
 		clr	sending_msg
+		clr	string
 		mov	uart_out_counter,#0h
+		orl	CFG832,#00000001b	;XRAMEN OP 1 ZETTEN! => XRAM aanzetten
 		RET
 		
 		
@@ -94,6 +96,8 @@ uart_sync:	mov	a,uart_in1
 		mov	fase,#1h
 		ljmp	print_fase
 		
+uart_error_tmp: ljmp	uart_error_msg		
+		
 uart_send:	mov	a,uart_in2
 		cjne	a,#'e',uart_error_tmp		;send
 		mov	a,uart_in3
@@ -104,8 +108,9 @@ uart_send:	mov	a,uart_in2
 		setb	string
 		mov 	msg_pointer_h,#0h
 		mov 	msg_pointer_l,#0h
+		ljmp	print_fase
 		
-lees_string:	mov	dpl,msg_pointer_l		
+lees_string:	mov	dpl,msg_pointer_l		;Lees string om te verzenden in	
 		mov	dph,msg_pointer_h
 		mov	a,SBUF
 		cjne	a,#CR,lees_verder
@@ -119,6 +124,8 @@ lees_verder:	movx	@dptr,a
 uart_trans_temp:sjmp	uart_trans
 		
 einde_string:	clr	string
+		mov 	msg_pointer_h,#0h
+		mov 	msg_pointer_l,#0h
 		ljmp	uart_trans_msg
 
 uart_run:	mov	a,uart_in1
@@ -131,10 +138,6 @@ uart_run:	mov	a,uart_in1
 		cjne	a,#'p',uart_error_tmp
 		mov	fase,#3h
 		ljmp	print_fase
-
-
-
-uart_error_tmp: ljmp	uart_error_msg
 		
 ; <Start Transmit>		
 uart_trans:	jnb	TI, uart_ret			;SBUF fully transmitted?
@@ -147,8 +150,9 @@ uart_trans:	jnb	TI, uart_ret			;SBUF fully transmitted?
 ;Het signaal wordt eerst gekopieerd naar XRAM geheugen, zodat het eventueel nog aangepast kan worden voor verschillende
 ;soorten errors.
 uart_error_msg:	mov	dptr,#uart_input_error
-		mov	pwmcon,#10011100b
 		lcall	uart_cpy_msg
+		mov 	msg_pointer_h,#0h
+		mov 	msg_pointer_l,#0h
 		sjmp	uart_trans_msg
 		
 uart_cpy_msg:	mov 	msg_pointer_l,#0h	; voorlopig gebruiken als counter voor XRAM		
@@ -177,9 +181,7 @@ uart_cpy_loop:	mov	a,#0h
 		jnz	uart_cpy_loop
 		RET
 		
-uart_trans_msg: mov 	msg_pointer_h,#0h
-		mov 	msg_pointer_l,#0h
-		setb	sending_msg
+uart_trans_msg: setb	sending_msg
 		mov 	dph, msg_pointer_h	;laad counter in dptr
 		mov 	dpl, msg_pointer_l
 		movx	a,@dptr
